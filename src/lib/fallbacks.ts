@@ -43,7 +43,7 @@ export const fallbackHomePage: HomePage = {
     },
   ],
   matchesSection: {
-    title: 'Live & Upcoming Matches',
+    title: 'Live Games',
     subtitle: 'Real-time match events with live odds and instant betting options.',
     categories: [
       {
