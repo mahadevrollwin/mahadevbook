@@ -12,7 +12,6 @@ import {WhatsAppFloat} from '@/components/WhatsAppFloat'
 import {SiteSettingsProvider} from '@/components/SiteSettingsProvider'
 import {getSiteSettings} from '@/lib/queries'
 
-
 const cinzel = Cinzel({
   variable: '--font-cinzel',
   subsets: ['latin'],
@@ -27,9 +26,15 @@ const jakarta = Plus_Jakarta_Sans({
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings()
+
   return {
     title: settings.title || 'Mahadev Book',
     description: settings.description,
+
+    verification: {
+      google: 'CxZyiZUZSwTca_gtmrCTEVACSfrNQgva8xJ3PbcY6O0',
+    },
+
     icons: {
       icon: [{url: '/favicon.png', type: 'image/png'}],
       shortcut: '/favicon.png',
@@ -52,22 +57,26 @@ export default async function RootLayout({
       <head>
         {/* Google tag (gtag.js) */}
         <Script
+          id="google-analytics-script"
           src="https://www.googletagmanager.com/gtag/js?id=G-YFZFKY8NBJ"
-          strategy="afterInteractive"
+          strategy="beforeInteractive"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+
+        <Script id="google-analytics" strategy="beforeInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
+            function gtag(){window.dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-YFZFKY8NBJ');
           `}
         </Script>
+
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         />
       </head>
+
       <body>
         <SiteSettingsProvider settings={settings}>
           <AOSProvider>
